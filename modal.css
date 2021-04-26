@@ -118,7 +118,7 @@ img {
   }
 
   .hero-section {
-    max-height: 80vh;  /* Diminue la hauteur de la section */
+    height: auto;  /* Diminue la hauteur de la section */
   }
 }
 
@@ -624,7 +624,7 @@ footer {
   .hero-section {
     display: block;
     box-shadow: unset;
-    min-height: 93vh;  /*  min-height: unset; */
+    height: auto;  /*  min-height: unset; */
     padding: 0;     /*  Supprime padding et margin-bottom pour écran plus dense  */
     margin-bottom: 0;
   }
