@@ -93,12 +93,13 @@ img {
     top: 5px;
     display: block;
     color: red;    /*  Colorie l'icone en rouge   */
-    background-color: white;
+    background-color: transparent;
   }
 
   .topnav a i {
     font-size: 22px; /*  Agrandi l'icone            */
   }
+
 }
 
 @media screen and (max-width: 768px) {
@@ -106,6 +107,15 @@ img {
   /*  position: relative;  */
   }
 
+  .main-navbar {
+    margin-right: 20px;
+
+  }
+  
+  .option1 {
+    margin-top: 15px !important;
+  }
+  
   .topnav.responsive .icon {
     position: absolute;
     right: 10px;
