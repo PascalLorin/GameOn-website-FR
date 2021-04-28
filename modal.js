@@ -6,7 +6,6 @@ function editNav() {
     x.className = "topnav";
   }
 }
-
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBody = document.querySelector('.modal-body');
@@ -37,6 +36,11 @@ closeBtnRed.addEventListener("click", closeModal);
 // launch modal form
 function launchModal(event) {
   form.reset();
+  for (let i = 0; i < formData.length; i++) {
+    formData[i].dataset.error = "";
+    formData[i].dataset.errorVisible = "false";
+  }
+
   registred.style.display = "none";
   modalbg.style.display = "block";
   modalBody.style.display = "block";
@@ -69,7 +73,7 @@ function checkInputs() {
   let checkbox1 = document.getElementById("checkbox1");
   let birthInput = Date.parse(birthDate.value);
 
-  if (!nameOk.test(first.value)) {
+  if ((first.legnth < 3) || (!nameOk.test(first.value))) {
     formData[0].dataset.error = "Majuscule initiale puis lettres, espace, apostrophe et tiret sont valides";
     formData[0].dataset.errorVisible = "true";
     inputsOk = false;
@@ -78,7 +82,7 @@ function checkInputs() {
     formData[0].dataset.errorVisible = "false";
   }
 
-  if (nameOk.test(last.value) == false) {
+  if ((last.legnth < 3) || (!nameOk.test(last.value))) {
     formData[1].dataset.error = "Majuscule initiale puis lettres, espace, apostrophe et tiret sont valides";
     formData[1].dataset.errorVisible = "true";
     inputsOk = false;
@@ -87,7 +91,7 @@ function checkInputs() {
     formData[1].dataset.errorVisible = "false";
   }
 
-  if (emailOk.test(email.value) == false) {
+  if ((email.legnth < 3) || (!emailOk.test(email.value))) {
     formData[2].dataset.error = "Veuillez renseigner une adresse mail correcte";
     formData[2].dataset.errorVisible = "true";
     inputsOk = false;
@@ -96,7 +100,11 @@ function checkInputs() {
     formData[2].dataset.errorVisible = "false";
   }
 
-  if (birthInput > minDate) {
+  if (birthdate == "" || birthdate.value == NaN || birthdate.value == 0) {
+    formData[3].dataset.error = "Vous devez saisir votre date de naissance !";
+    formData[3].dataset.errorVisible = "true";
+    inputsOk = false;
+  } else if (birthInput > minDate) {
     formData[3].dataset.error = "Vous êtes trop jeune ! (min 10 ans)";
     formData[3].dataset.errorVisible = "true";
     inputsOk = false;
@@ -104,26 +112,30 @@ function checkInputs() {
     formData[3].dataset.error = "L'âge maximum vraisemblable est de 120 ans !";
     formData[3].dataset.errorVisible = "true";
     inputsOk = false;
+  } else {
+    formData[3].dataset.error = "";
+    formData[3].dataset.errorVisible = "false";
   }
+
 
   // in case of FIRST registration, no location is required
   if (quantity.value == "" || quantity.value == NaN || quantity.value == 0) {
     quantity.value = 0;
+    formData[4].dataset.error = "";
+    formData[4].dataset.errorVisible = "false";
     for (let i = 0; i < 6; i++) {
       location[i] = false;
       location[i].setAttribute.disable = "true";
     }
+  } else if (quantity.value > 99) {
+    formData[4].dataset.error = "Ce nombre doit être compris entre 0 et 99 !";
+    formData[4].dataset.errorVisible = "true";
+    inputsOk = false;
   } else {
-    if (quantity.value > 99) {
-      formData[4].dataset.error = "Nombre d'évènements acceptés : de 0 à 99.";
-      formData[4].dataset.errorVisible = "true";
-      inputsOk = false;
-    } else {
-      formData[4].dataset.error = "";
-      formData[4].dataset.errorVisible = "false";
-      for (let i = 0; i < 6; i++) {
-        location[i].setAttribute.disable = "false";
-      }
+    formData[4].dataset.error = "";
+    formData[4].dataset.errorVisible = "false";
+    for (let i = 0; i < 6; i++) {
+      location[i].setAttribute.disable = "false";
     }
   }
 
@@ -134,7 +146,7 @@ function checkInputs() {
         location[3].checked ||
         location[4].checked ||
         location[5].checked)) {
-      formData[5].dataset.error = "Veuillez sélectionner au moins un lieu.";
+      formData[5].dataset.error = "Veuillez sélectionner au moins une ville !";
       formData[5].dataset.errorVisible = "true";
       inputsOk = false;
     } else {
